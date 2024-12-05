@@ -1,18 +1,17 @@
 mod db;
 
+use db::AppState;
+
 use std::sync::Arc;
 
 use axum::{
     extract::{Query, State},
     http::StatusCode,
-    response::Html,
+    response::{Html, Json},
     routing::get,
-    Json, Router,
+    Router,
 };
-use base64::prelude::*;
-use db::AppState;
-use handlebars::Handlebars;
-use minify_html::Cfg;
+use base64::prelude::{Engine, BASE64_STANDARD};
 use redb::{Database, TableDefinition};
 use serde::Deserialize;
 use serde_json::json;
@@ -26,8 +25,7 @@ struct Params {
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let image = include_bytes!("../static/bg.png");
-    let image = BASE64_STANDARD.encode(image);
+    let image = BASE64_STANDARD.encode(include_bytes!("../static/bg.png"));
     let state = Arc::new(AppState {
         db: Database::create("users.redb")?,
         table: TableDefinition::new("users"),
@@ -46,7 +44,7 @@ async fn get_badge(
     State(state): State<Arc<AppState<'_>>>,
     Query(params): Query<Params>,
 ) -> (StatusCode, Html<String>) {
-    let reg = Handlebars::new();
+    let reg = handlebars::Handlebars::new();
     let value = state.get(&params.key).unwrap();
     let html = reg
         .render_template(
@@ -54,7 +52,7 @@ async fn get_badge(
             &json!({"key": &params.key, "value": value, "image": state.image}),
         )
         .unwrap();
-    let cfg = Cfg {
+    let cfg = minify_html::Cfg {
         minify_css: true,
         minify_js: true,
         ..Default::default()
