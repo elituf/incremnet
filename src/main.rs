@@ -1,6 +1,8 @@
 mod db;
+mod error;
 
 use db::AppState;
+use error::{AppError, Error};
 
 use std::sync::Arc;
 
@@ -15,8 +17,6 @@ use base64::prelude::{Engine, BASE64_STANDARD};
 use redb::{Database, TableDefinition};
 use serde::Deserialize;
 use serde_json::json;
-
-type Error = Box<dyn std::error::Error>;
 
 #[derive(Deserialize)]
 struct Params {
@@ -43,15 +43,13 @@ async fn main() -> Result<(), Error> {
 async fn get_badge(
     State(state): State<Arc<AppState<'_>>>,
     Query(params): Query<Params>,
-) -> (StatusCode, Html<String>) {
+) -> Result<(StatusCode, Html<String>), AppError> {
     let reg = handlebars::Handlebars::new();
-    let value = state.get(&params.key).unwrap();
-    let html = reg
-        .render_template(
-            include_str!("../templates/badge.handlebars"),
-            &json!({"key": &params.key, "value": value, "image": state.image}),
-        )
-        .unwrap();
+    let value = state.get(&params.key)?;
+    let html = reg.render_template(
+        include_str!("../templates/badge.handlebars"),
+        &json!({"key": &params.key, "value": value, "image": state.image}),
+    )?;
     let cfg = minify_html::Cfg {
         minify_css: true,
         minify_js: true,
@@ -59,15 +57,15 @@ async fn get_badge(
     };
     let html = minify_html::minify(html.as_bytes(), &cfg);
     let html = String::from_utf8_lossy(&html).to_string();
-    (StatusCode::OK, Html(html))
+    Ok((StatusCode::OK, Html(html)))
 }
 
 async fn post_badge(
     State(state): State<Arc<AppState<'_>>>,
     Query(params): Query<Params>,
-) -> (StatusCode, Json<serde_json::Value>) {
-    let value = state.get(&params.key).unwrap();
-    state.set(&params.key, value + 1).unwrap();
-    let value = state.get(&params.key).unwrap();
-    (StatusCode::OK, json!({ "value": value }).into())
+) -> Result<(StatusCode, Json<serde_json::Value>), AppError> {
+    let value = state.get(&params.key)?;
+    state.set(&params.key, value + 1)?;
+    let value = state.get(&params.key)?;
+    Ok((StatusCode::OK, json!({ "value": value }).into()))
 }
