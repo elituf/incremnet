@@ -8,16 +8,21 @@
     <title>incremnet</title>
     <link rel="preconnect" href="https://increm.net/" />
     <style>
+        @import url(https://fonts.bunny.net/css?family=ibm-plex-mono:400);
+
+        * {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
         body {
             color: white;
             background-color: black;
             width: 300px;
         }
 
-        textarea {
-            color: white;
-            background-color: black;
-            resize: none;
+        ::selection {
+            background-color: white;
+            color: black;
         }
 
         a {
@@ -26,16 +31,48 @@
 
         h1 {
             font-size: 16px;
-            font-weight: normal;
         }
 
         p {
             font-size: 14px;
         }
 
+        textarea {
+            resize: none;
+            width: 300px;
+            height: 100px;
+            font-size: 12px;
+            color: white;
+            border: 2px solid white;
+            background-color: black;
+        }
+
+        .copy-btn {
+            position: absolute;
+            display: inline-block;
+            bottom: 5px;
+            right: -7px;
+            padding: 3px 6px;
+            color: white;
+            background-color: black;
+            border: 2px solid white;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @-moz-document url-prefix() {
+            .copy-btn {
+                bottom: 1px;
+                right: -8px;
+            }
+        }
+
         .container {
-            margin: 16px auto auto auto;
             position: relative;
+        }
+
+        .incremnet-btn {
+            margin: 16px auto auto auto;
         }
 
         .footer {
@@ -44,14 +81,19 @@
             margin-left: 10px;
         }
     </style>
+
 </head>
 
 <body>
     <h1>welcome to incremnet</h1>
     <p>simply place the below iframe anywhere you would place a normal 88x31 image</p>
-    <textarea readonly
-        style="width: 300px; height: 100px"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" frameborder="0"></iframe></textarea>
     <div class="container">
+        <textarea
+            readonly><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" frameborder="0"></iframe></textarea>
+        <button class="copy-btn"
+            onclick="document.querySelector('textarea').select(); document.execCommand('copy');">copy</button>
+    </div>
+    <div class="incremnet-btn">
         <iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31"
             frameborder="0"></iframe>
     </div>
