@@ -1,5 +1,4 @@
 use axum::{http::StatusCode, response::IntoResponse};
-use handlebars::RenderError;
 
 pub type Error = Box<dyn std::error::Error>;
 
@@ -16,14 +15,11 @@ impl IntoResponse for AppError {
     }
 }
 
-impl From<Error> for AppError {
-    fn from(value: Error) -> Self {
-        Self(value)
-    }
-}
-
-impl From<RenderError> for AppError {
-    fn from(value: RenderError) -> Self {
-        Self(Box::new(value))
+impl<E> From<E> for AppError
+where
+    E: Into<Error>,
+{
+    fn from(value: E) -> Self {
+        Self(value.into())
     }
 }
