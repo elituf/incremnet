@@ -50,7 +50,7 @@ async fn get_badge(
     let value = state.get(&params.key).unwrap();
     let html = reg
         .render_template(
-            include_str!("../templates/badge.html"),
+            include_str!("../templates/badge.handlebars"),
             &json!({"key": &params.key, "value": value, "image": state.image}),
         )
         .unwrap();
