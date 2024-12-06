@@ -1,8 +1,10 @@
 server := "futile@futile.eu"
+deploy := "/var/www/incremnet/"
 
 deploy-server:
     cargo build --release
-    scp -pr target/release/incremnet static/index.html {{server}}:/var/www/incremnet/
+    ssh {{server}} 'cd {{deploy}} && cp users.redb users.bak.redb'
+    scp -pr target/release/incremnet static/index.html {{server}}:{{deploy}}
 
 deploy-caddy:
     scp -pr Caddyfile {{server}}:Caddyfile
