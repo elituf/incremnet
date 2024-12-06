@@ -4,7 +4,7 @@ deploy := "/var/www/incremnet/"
 deploy-server:
     cargo build --release
     ssh {{server}} 'cd {{deploy}} && cp users.redb users.bak.redb'
-    scp -pr target/release/incremnet static/index.html {{server}}:{{deploy}}
+    scp -pr target/release/incremnet static/index.html static/favicon.png {{server}}:{{deploy}}
 
 deploy-caddy:
     scp -pr Caddyfile {{server}}:Caddyfile
