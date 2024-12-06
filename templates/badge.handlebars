@@ -17,7 +17,13 @@
             margin: 0;
         }
 
-        .text {
+        img {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        span {
             position: absolute;
             font-size: 14px;
             font-family: 'MS Sans Serif', Arial, sans-serif;
@@ -26,7 +32,7 @@
             left: 6px;
         }
 
-        .button {
+        area {
             cursor: pointer;
         }
     </style>
@@ -55,9 +61,9 @@
 
 <body>
     <img src="data:image/png;base64,{{image}}" usemap="#image-map">
-    <span class="text" id="value">{{value}}</span>
+    <span id="value">{{value}}</span>
     <map name="image-map">
-        <area class="button" alt="incremnet this page" title="incremnet this page" coords="69,4,84,19" shape="rect"
+        <area alt="incremnet this page" title="incremnet this page" coords="69,4,84,19" shape="rect"
             onclick="incremnetBadge()">
         <area target="_blank" alt="incremnet" title="incremnet" href="https://increm.net" coords="20,21,67,30"
             shape="rect">
