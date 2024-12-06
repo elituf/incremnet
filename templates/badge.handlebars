@@ -14,7 +14,6 @@
         html {
             margin: 0;
             overflow: hidden;
-            color-scheme: light dark
         }
 
         body {
@@ -23,12 +22,9 @@
 
         img {
             image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
         }
 
         span {
-            user-select: text;
             position: absolute;
             font-size: 14px;
             font-family: 'MS Sans Serif', Arial, sans-serif;
@@ -45,14 +41,14 @@
     <script>
         async function incremnetBadge() {
             try {
-                const response = await fetch('/badge?key={{key}}', { method: 'POST' });
-                if (response.ok) {
-                    const data = await response.json();
-                    const valueElement = document.getElementById('value');
-                    valueElement.textContent = data.value;
-                    valueElement.style.color = 'grey';
+                const r = await fetch('/badge?key={{key}}', { method: 'POST' });
+                if (r.ok) {
+                    const d = await r.json();
+                    const e = document.getElementById('value');
+                    e.textContent = d.value;
+                    e.style.color = 'grey';
                     setTimeout(() => {
-                        valueElement.style.color = '';
+                        e.style.color = '';
                     }, 100);
                 } else {
                     console.error('failed to incremnet badge');
