@@ -9,6 +9,7 @@ fn table_to_map(tb: ReadOnlyTable<&str, u64>) -> BTreeMap<String, u64> {
     if let Ok(range) = tb.iter() {
         for entry in range {
             if let Ok(entry) = entry {
+                println!("{:?}: {}", entry.0.value().to_string(), entry.1.value());
                 map.insert(entry.0.value().to_string(), entry.1.value());
             }
         }
