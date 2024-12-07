@@ -25,7 +25,7 @@ struct Params {
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let image = BASE64_STANDARD.encode(include_bytes!("../static/bg.png"));
+    let image = BASE64_STANDARD.encode(include_bytes!("../../static/bg.png"));
     let state = Arc::new(AppState {
         db: Database::create("users.redb")?,
         table: TableDefinition::new("users"),
