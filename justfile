@@ -1,10 +1,15 @@
 server := "futile@futile.eu"
-deploy := "/var/www/incremnet/"
+deploy := "/var/www/incremnet"
 
-deploy-server:
-    cargo build --release
+backup:
     ssh {{server}} 'cd {{deploy}} && cp users.redb users.bak.redb'
-    scp -pr target/release/incremnet static/index.html static/favicon.png {{server}}:{{deploy}}
+    mkdir -p backups
+    scp futile@futile.eu:{{deploy}}/users.bak.redb backups/users.bak.redb
+    cargo run --bin dump --release
+
+deploy-server: backup
+    cargo build --release
+    scp -pr target/release/incremnet incremnet/static/index.html incremnet/static/favicon.png {{server}}:{{deploy}}
 
 deploy-caddy:
     scp -pr Caddyfile {{server}}:Caddyfile
