@@ -1,12 +1,12 @@
 # incremnet
 an 88x31 that you can click<br>
-![](static/screenshot.png)
+![](assets/screenshot.png)
 
-*visit https://increm.net to get your own!*
+*visit [increm.net](https://increm.net) to get your own!*
 
 
 ## project structure
-
-- [dump](dump/) - a tool to dump the users key/value db to a json
-- [incremnet](incremnet/) - the main project, contains a web server
-- [static](static/) - misc files for the project, such as the website and some images 
+- [**assets**](assets/) - misc content for the repo
+- [**dump**](dump/) - a tool to dump the users db to a json
+- [**incremnet**](incremnet/) - the main project, serves at [increm.net/badge](https://increm.net/badge?key=changeme)
+- [**www**](www/) - the demo website at [increm.net](https://increm.net)
