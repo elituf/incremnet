@@ -1,9 +1,9 @@
 # incremnet
-an 88x31 that you can click
+an 88x31 that you can click<br>
+![](static/screenshot.png)
 
-visit https://increm.net to get your own!
+*visit https://increm.net to get your own!*
 
-![](static/Screenshot_20241207_135555.png)
 
 ## project structure
 
