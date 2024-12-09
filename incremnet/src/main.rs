@@ -1,7 +1,6 @@
 mod db;
 mod error;
 
-use db::DbWrapper;
 use error::{AppError, Error};
 
 use std::sync::Arc;
@@ -20,7 +19,7 @@ use serde::Deserialize;
 use serde_json::json;
 
 struct AppState<'a> {
-    db: DbWrapper,
+    db: db::Wrapper,
     image: String,
     handlebars: Handlebars<'a>,
     minify_cfg: minify_html::Cfg,
@@ -61,7 +60,7 @@ async fn main() -> Result<(), Error> {
     let mut handlebars = Handlebars::new();
     handlebars.register_template_file("badge", "incremnet/templates/badge.handlebars")?;
     let state = Arc::new(AppState {
-        db: DbWrapper {
+        db: db::Wrapper {
             db: Database::create("users.redb")?,
             table: TableDefinition::new("users"),
         },

@@ -2,12 +2,12 @@ use crate::error::Error;
 
 use redb::{Database, TableDefinition};
 
-pub struct DbWrapper {
+pub struct Wrapper {
     pub db: Database,
     pub table: TableDefinition<'static, &'static str, u64>,
 }
 
-impl DbWrapper {
+impl Wrapper {
     pub fn init(&self) -> Result<(), Error> {
         let tx = self.db.begin_write()?;
         {
