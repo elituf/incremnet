@@ -14,13 +14,15 @@ use axum::{
     Router,
 };
 use base64::prelude::{Engine, BASE64_STANDARD};
+use handlebars::Handlebars;
 use redb::{Database, TableDefinition};
 use serde::Deserialize;
 use serde_json::json;
 
-struct AppState {
+struct AppState<'a> {
     db: DbWrapper,
     image: String,
+    handlebars: Handlebars<'a>,
 }
 
 #[derive(Deserialize)]
@@ -29,13 +31,12 @@ struct Params {
 }
 
 async fn get_badge(
-    State(state): State<Arc<AppState>>,
+    State(state): State<Arc<AppState<'_>>>,
     Query(params): Query<Params>,
 ) -> Result<(StatusCode, Html<String>), AppError> {
-    let reg = handlebars::Handlebars::new();
     let value = state.db.get(&params.key)?;
-    let html = reg.render_template(
-        include_str!("../templates/badge.handlebars"),
+    let html = state.handlebars.render(
+        "badge",
         &json!({"key": &params.key, "value": value, "image": state.image}),
     )?;
     let cfg = minify_html::Cfg {
@@ -49,7 +50,7 @@ async fn get_badge(
 }
 
 async fn post_badge(
-    State(state): State<Arc<AppState>>,
+    State(state): State<Arc<AppState<'_>>>,
     Query(params): Query<Params>,
 ) -> Result<(StatusCode, Json<serde_json::Value>), AppError> {
     let value = state.db.get(&params.key)?;
@@ -61,12 +62,15 @@ async fn post_badge(
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     let image = BASE64_STANDARD.encode(include_bytes!("../static/bg.png"));
+    let mut handlebars = Handlebars::new();
+    handlebars.register_template_file("badge", "incremnet/templates/badge.handlebars")?;
     let state = Arc::new(AppState {
         db: DbWrapper {
             db: Database::create("users.redb")?,
             table: TableDefinition::new("users"),
         },
         image,
+        handlebars,
     });
     state.db.init()?;
     let app = Router::new()
