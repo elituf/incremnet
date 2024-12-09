@@ -23,23 +23,6 @@ struct Params {
     key: String,
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Error> {
-    let image = BASE64_STANDARD.encode(include_bytes!("../static/bg.png"));
-    let state = Arc::new(AppState {
-        db: Database::create("users.redb")?,
-        table: TableDefinition::new("users"),
-        image,
-    });
-    state.init()?;
-    let app = Router::new()
-        .route("/badge", get(get_badge).post(post_badge))
-        .with_state(state);
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:1337").await?;
-    axum::serve(listener, app).await?;
-    Ok(())
-}
-
 async fn get_badge(
     State(state): State<Arc<AppState<'_>>>,
     Query(params): Query<Params>,
@@ -68,4 +51,21 @@ async fn post_badge(
     state.set(&params.key, value + 1)?;
     let value = state.get(&params.key)?;
     Ok((StatusCode::OK, json!({ "value": value }).into()))
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Error> {
+    let image = BASE64_STANDARD.encode(include_bytes!("../static/bg.png"));
+    let state = Arc::new(AppState {
+        db: Database::create("users.redb")?,
+        table: TableDefinition::new("users"),
+        image,
+    });
+    state.init()?;
+    let app = Router::new()
+        .route("/badge", get(get_badge).post(post_badge))
+        .with_state(state);
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:1337").await?;
+    axum::serve(listener, app).await?;
+    Ok(())
 }
