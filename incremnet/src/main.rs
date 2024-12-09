@@ -23,6 +23,7 @@ struct AppState<'a> {
     db: DbWrapper,
     image: String,
     handlebars: Handlebars<'a>,
+    minify_cfg: minify_html::Cfg,
 }
 
 #[derive(Deserialize)]
@@ -39,12 +40,7 @@ async fn get_badge(
         "badge",
         &json!({"key": &params.key, "value": value, "image": state.image}),
     )?;
-    let cfg = minify_html::Cfg {
-        minify_css: true,
-        minify_js: true,
-        ..Default::default()
-    };
-    let html = minify_html::minify(html.as_bytes(), &cfg);
+    let html = minify_html::minify(html.as_bytes(), &state.minify_cfg);
     let html = String::from_utf8_lossy(&html).to_string();
     Ok((StatusCode::OK, Html(html)))
 }
@@ -71,6 +67,11 @@ async fn main() -> Result<(), Error> {
         },
         image,
         handlebars,
+        minify_cfg: minify_html::Cfg {
+            minify_css: true,
+            minify_js: true,
+            ..Default::default()
+        },
     });
     state.db.init()?;
     let app = Router::new()
