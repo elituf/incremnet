@@ -58,7 +58,7 @@ async fn post_badge(
 async fn main() -> Result<(), Error> {
     let image = BASE64_STANDARD.encode(include_bytes!("../static/bg.png"));
     let mut handlebars = Handlebars::new();
-    handlebars.register_template_file("badge", "incremnet/templates/badge.handlebars")?;
+    handlebars.register_template_string("badge", include_str!("../templates/badge.handlebars"))?;
     let state = Arc::new(AppState {
         db: db::Wrapper {
             db: Database::create("users.redb")?,
