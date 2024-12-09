@@ -1,7 +1,7 @@
 mod db;
 mod error;
 
-use db::AppState;
+use db::DbWrapper;
 use error::{AppError, Error};
 
 use std::sync::Arc;
@@ -18,17 +18,22 @@ use redb::{Database, TableDefinition};
 use serde::Deserialize;
 use serde_json::json;
 
+struct AppState {
+    db: DbWrapper,
+    image: String,
+}
+
 #[derive(Deserialize)]
 struct Params {
     key: String,
 }
 
 async fn get_badge(
-    State(state): State<Arc<AppState<'_>>>,
+    State(state): State<Arc<AppState>>,
     Query(params): Query<Params>,
 ) -> Result<(StatusCode, Html<String>), AppError> {
     let reg = handlebars::Handlebars::new();
-    let value = state.get(&params.key)?;
+    let value = state.db.get(&params.key)?;
     let html = reg.render_template(
         include_str!("../templates/badge.handlebars"),
         &json!({"key": &params.key, "value": value, "image": state.image}),
@@ -44,12 +49,12 @@ async fn get_badge(
 }
 
 async fn post_badge(
-    State(state): State<Arc<AppState<'_>>>,
+    State(state): State<Arc<AppState>>,
     Query(params): Query<Params>,
 ) -> Result<(StatusCode, Json<serde_json::Value>), AppError> {
-    let value = state.get(&params.key)?;
-    state.set(&params.key, value + 1)?;
-    let value = state.get(&params.key)?;
+    let value = state.db.get(&params.key)?;
+    state.db.set(&params.key, value + 1)?;
+    let value = state.db.get(&params.key)?;
     Ok((StatusCode::OK, json!({ "value": value }).into()))
 }
 
@@ -57,11 +62,13 @@ async fn post_badge(
 async fn main() -> Result<(), Error> {
     let image = BASE64_STANDARD.encode(include_bytes!("../static/bg.png"));
     let state = Arc::new(AppState {
-        db: Database::create("users.redb")?,
-        table: TableDefinition::new("users"),
+        db: DbWrapper {
+            db: Database::create("users.redb")?,
+            table: TableDefinition::new("users"),
+        },
         image,
     });
-    state.init()?;
+    state.db.init()?;
     let app = Router::new()
         .route("/badge", get(get_badge).post(post_badge))
         .with_state(state);
