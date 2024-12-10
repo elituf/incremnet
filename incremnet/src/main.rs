@@ -48,23 +48,23 @@ async fn post_badge(
     State(state): State<Arc<AppState<'_>>>,
     Query(params): Query<Params>,
 ) -> Result<(StatusCode, Json<serde_json::Value>), AppError> {
-    let value = state.db.get(&params.key)?;
-    state.db.set(&params.key, value + 1)?;
-    let value = state.db.get(&params.key)?;
+    let value = 1 + state.db.get(&params.key)?;
+    state.db.set(&params.key, value)?;
     Ok((StatusCode::OK, json!({ "value": value }).into()))
 }
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let image = BASE64_STANDARD.encode(include_bytes!("../static/bg.png"));
+    let db = db::Wrapper {
+        db: Database::create("users.redb")?,
+        table: TableDefinition::new("users"),
+    };
+    db.init()?;
     let mut handlebars = Handlebars::new();
     handlebars.register_template_string("badge", include_str!("../templates/badge.handlebars"))?;
     let state = Arc::new(AppState {
-        db: db::Wrapper {
-            db: Database::create("users.redb")?,
-            table: TableDefinition::new("users"),
-        },
-        image,
+        db,
+        image: BASE64_STANDARD.encode(include_bytes!("../static/bg.png")),
         handlebars,
         minify_cfg: minify_html::Cfg {
             minify_css: true,
@@ -72,7 +72,6 @@ async fn main() -> Result<(), Error> {
             ..Default::default()
         },
     });
-    state.db.init()?;
     let app = Router::new()
         .route("/badge", get(get_badge).post(post_badge))
         .with_state(state);
