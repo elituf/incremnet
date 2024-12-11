@@ -5,10 +5,10 @@ backup:
     ssh {{server}} 'cd {{deploy}} && cp users.redb users.bak.redb'
     mkdir -p backups
     scp futile@futile.eu:{{deploy}}/users.bak.redb backups/users.bak.redb
-    cargo run --bin dump --release
+    cargo run --bin dump --release --quiet
 
 deploy-server: backup
-    cargo build --release
+    cargo build --release --quiet
     scp -pr target/release/incremnet www/ {{server}}:{{deploy}}
     scp -pr incremnet/static/bg.png {{server}}:{{deploy}}/www
 
