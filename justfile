@@ -10,6 +10,7 @@ backup:
 deploy-server: backup
     cargo build --release
     scp -pr target/release/incremnet www/ {{server}}:{{deploy}}
+    scp -pr incremnet/static/bg.png {{server}}:{{deploy}}/www
 
 deploy-caddy:
     scp -pr Caddyfile {{server}}:Caddyfile

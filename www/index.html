@@ -136,18 +136,18 @@
     </div>
     <div class="checkbox-container">
         <label
-            data-custom-title="before the iframe loads in on your website (which takes some fraction of a second), this can help mask the empty space.">beige
-            background?</label>
+            data-custom-title="before the iframe loads in on your website (which takes some fraction of a second), this can help mask the empty space.">background
+            image?</label>
         <input type="checkbox" id="bg" checked onchange="update()">
     </div>
     <div class="container">
         <textarea readonly
-            id="code"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" frameborder="0" style="background-color: #d4d0c8"></iframe></textarea>
+            id="code"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" frameborder="0" style="background: url('https://increm.net/bg.png')"></iframe></textarea>
         <button class="btn-common copy-btn" onclick="copy()">copy</button>
     </div>
     <div class="incremnet-btn">
         <iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31"
-            frameborder="0" style="background-color: #d4d0c8"></iframe>
+            frameborder="0" style="background: url('https://increm.net/bg.png')"></iframe>
     </div>
     <div class="footer">
         <p>with love from <a href="https://futile.eu" target="_blank">futile</a></p>
@@ -156,7 +156,7 @@
         function update() {
             const key = document.getElementById('key').value || 'changeme';
             const bg = document.getElementById('bg').checked;
-            const style = bg ? ' style="background-color: #d4d0c8"' : '';
+            const style = bg ? ' style="background: url(\'https://increm.net/bg.png\')"' : '';
             const code = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" frameborder="0"${style}></iframe>`;
             document.getElementById('code').value = code;
         }
