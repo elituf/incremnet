@@ -59,21 +59,13 @@
 
         .inputbox-container {
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
         }
 
         .inputbox-container input {
             color: white;
             border: 2px solid white;
             background-color: black;
-        }
-
-        .checkbox-container {
-            margin-bottom: 10px;
-        }
-
-        .checkbox-container input {
-            color: white;
         }
 
         textarea {
@@ -111,7 +103,7 @@
 
         .container {
             position: relative;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
         }
 
         .footer {
@@ -134,20 +126,14 @@
             data-custom-title="the 'username' of your button, so to speak. try opening the button in a new tab and seeing if what you want is used already.">key:</label>
         <input type="text" id="key" placeholder="something unique" oninput="update()">
     </div>
-    <div class="checkbox-container">
-        <label
-            data-custom-title="before the iframe loads in on your website (which takes some fraction of a second), this can help mask the empty space.">background
-            image?</label>
-        <input type="checkbox" id="bg" checked onchange="update()">
-    </div>
     <div class="container">
         <textarea readonly
-            id="code"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" frameborder="0" style="background: url('https://increm.net/bg.png')"></iframe></textarea>
+            id="code"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe></textarea>
         <button class="btn-common copy-btn" onclick="copy()">copy</button>
     </div>
     <div class="incremnet-btn">
         <iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31"
-            frameborder="0" style="background: url('https://increm.net/bg.png')"></iframe>
+            style="border: none; background: url('https://increm.net/bg.png');"></iframe>
     </div>
     <div class="footer">
         <p>with love from <a href="https://futile.eu" target="_blank">futile</a></p>
@@ -155,9 +141,7 @@
     <script>
         function update() {
             const key = document.getElementById('key').value || 'changeme';
-            const bg = document.getElementById('bg').checked;
-            const style = bg ? ' style="background: url(\'https://increm.net/bg.png\')"' : '';
-            const code = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" frameborder="0"${style}></iframe>`;
+            const code = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe>`;
             document.getElementById('code').value = code;
         }
         function copy() {
