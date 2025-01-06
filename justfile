@@ -7,7 +7,7 @@ backup:
     ssh {{server}} 'cd {{deploy}} && cp users.redb users.bak.redb'
     -mkdir -p backups
     scp futile@futile.eu:{{deploy}}/users.bak.redb backups/users.bak.redb
-    cargo run --bin dump --release --quiet
+    cargo run --release --quiet --bin tools dump backups/users.bak.redb backups/users.json
 
 deploy-server: backup
     cargo build --release --quiet

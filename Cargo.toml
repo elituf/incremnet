@@ -1,5 +1,5 @@
 [workspace]
-members = ["dump", "incremnet"]
+members = ["tools", "incremnet"]
 resolver = "2"
 
 [workspace.dependencies]

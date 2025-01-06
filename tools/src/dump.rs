@@ -1,4 +1,6 @@
-use std::{collections::BTreeMap, fs::File, io::Write};
+use crate::Error;
+
+use std::{collections::BTreeMap, fs::File, io::Write, path::Path};
 
 use redb::{Database, ReadOnlyTable, ReadableTable, TableDefinition};
 
@@ -15,13 +17,13 @@ fn table_to_map(tb: &ReadOnlyTable<&str, u64>) -> BTreeMap<String, u64> {
     map
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let db = Database::open("backups/users.bak.redb")?;
+pub fn dump(from: &Path, to: &Path) -> Result<(), Error> {
+    let db = Database::open(from)?;
+    let mut file = File::create(to)?;
     let tx = db.begin_read()?;
     let tb = tx.open_table(TABLE)?;
     let map = table_to_map(&tb);
     let json = serde_json::to_string_pretty(&map)?;
-    let mut file = File::create("backups/users.json")?;
     file.write_all(json.as_bytes())?;
     Ok(())
 }
