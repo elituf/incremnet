@@ -1,9 +1,11 @@
+set windows-shell := ["pwsh", "-NoLogo", "-Command"]
+
 server := "futile@futile.eu"
 deploy := "/var/www/incremnet"
 
 backup:
     ssh {{server}} 'cd {{deploy}} && cp users.redb users.bak.redb'
-    mkdir -p backups
+    -mkdir -p backups
     scp futile@futile.eu:{{deploy}}/users.bak.redb backups/users.bak.redb
     cargo run --bin dump --release --quiet
 

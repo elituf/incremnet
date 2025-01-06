@@ -1,3 +1,7 @@
 [workspace]
 members = ["dump", "incremnet"]
 resolver = "2"
+
+[workspace.dependencies]
+redb = "2.4.0"
+serde_json = "1.0.134"
