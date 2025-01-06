@@ -1,14 +1,14 @@
-use crate::error::Error;
+use std::error::Error;
 
 use redb::{Database, TableDefinition};
 
-pub struct Wrapper {
+pub struct Db {
     pub db: Database,
     pub table: TableDefinition<'static, &'static str, u64>,
 }
 
-impl Wrapper {
-    pub fn init(&self) -> Result<(), Error> {
+impl Db {
+    pub fn init(&self) -> Result<(), Box<dyn Error>> {
         let tx = self.db.begin_write()?;
         {
             let mut table = tx.open_table(self.table)?;
@@ -18,7 +18,7 @@ impl Wrapper {
         Ok(())
     }
 
-    pub fn set(&self, key: &str, amt: u64) -> Result<(), Error> {
+    pub fn set(&self, key: &str, amt: u64) -> Result<(), Box<dyn Error>> {
         let tx = self.db.begin_write()?;
         {
             let mut table = tx.open_table(self.table)?;
@@ -28,7 +28,7 @@ impl Wrapper {
         Ok(())
     }
 
-    pub fn get(&self, key: &str) -> Result<u64, Error> {
+    pub fn get(&self, key: &str) -> Result<u64, Box<dyn Error>> {
         let tx = self.db.begin_read()?;
         let table = tx.open_table(self.table)?;
         if let Some(value) = table.get(key)? {

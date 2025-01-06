@@ -1,4 +1,3 @@
-mod db;
 mod error;
 
 use error::{AppError, Error};
@@ -19,7 +18,7 @@ use serde::Deserialize;
 use serde_json::json;
 
 struct AppState<'a> {
-    db: db::Wrapper,
+    db: redb_wrapper::Db,
     image: String,
     handlebars: Handlebars<'a>,
     minify_cfg: minify_html::Cfg,
@@ -55,7 +54,7 @@ async fn post_badge(
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let db = db::Wrapper {
+    let db = redb_wrapper::Db {
         db: Database::create("users.redb")?,
         table: TableDefinition::new("users"),
     };
