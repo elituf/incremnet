@@ -3,7 +3,7 @@ www.increm.net {
 }
 
 increm.net {
-	root * /var/www/incremnet/www
+	root * /var/www/incremnet-site
 	file_server
 	encode gzip zstd
 
