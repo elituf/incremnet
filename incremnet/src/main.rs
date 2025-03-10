@@ -17,6 +17,8 @@ use redb::{Database, TableDefinition};
 use serde::Deserialize;
 use serde_json::json;
 
+const ADDR: &str = "0.0.0.0:1337";
+
 struct AppState<'a> {
     db: redb_wrapper::Db,
     image: String,
@@ -74,7 +76,8 @@ async fn main() -> Result<(), Error> {
     let app = Router::new()
         .route("/badge", get(get_badge).post(post_badge))
         .with_state(state);
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:1337").await?;
+    let listener = tokio::net::TcpListener::bind(ADDR).await?;
+    println!("Serving incremnet at {ADDR}!");
     axum::serve(listener, app).await?;
     Ok(())
 }
