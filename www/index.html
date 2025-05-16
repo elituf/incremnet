@@ -14,16 +14,15 @@
     <h1>welcome to incremnet</h1>
     <p>simply place the below iframe anywhere you would place a normal 88x31 image.</p>
     <div class="inputbox-container">
-        <label
-            data-custom-title="the 'username' of your button, so to speak. try opening the button in a new tab and seeing if what you want is used already.">key:</label>
+        <label>key:</label>
         <input type="text" id="key" placeholder="something unique" oninput="update()">
     </div>
     <div class="container">
         <textarea readonly
             id="code"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe></textarea>
-        <button class="btn-common copy-btn" onclick="copy()">copy</button>
+        <button class="btn-common btn-copy" onclick="copy()">copy</button>
     </div>
-    <div class="incremnet-btn">
+    <div>
         <iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31"
             style="border: none; background: url('https://increm.net/bg.png');"></iframe>
     </div>

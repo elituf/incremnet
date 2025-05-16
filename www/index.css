@@ -27,27 +27,6 @@ label {
     font-size: 14px;
 }
 
-[data-custom-title] {
-    text-decoration: underline dotted;
-}
-
-[data-custom-title]:hover {
-    position: relative;
-}
-
-[data-custom-title]:hover::after {
-    content: attr(data-custom-title);
-    position: absolute;
-    color: white;
-    background-color: black;
-    border: 1px solid white;
-    padding: 5px 10px;
-    width: 200px;
-    font-size: 0.9em;
-    bottom: 20px;
-    z-index: 10;
-}
-
 .inputbox-container {
     align-items: center;
     margin-bottom: 16px;
@@ -80,13 +59,13 @@ textarea {
     user-select: none;
 }
 
-.copy-btn {
+.btn-copy {
     bottom: 5px;
     right: -7px;
 }
 
 @-moz-document url-prefix() {
-    .copy-btn {
+    .btn-copy {
         bottom: 2px;
         right: -8px;
     }
@@ -105,4 +84,9 @@ textarea {
 
 a {
     color: white;
+    text-decoration: underline dotted;
+}
+
+a:hover {
+    text-decoration: underline solid;
 }
