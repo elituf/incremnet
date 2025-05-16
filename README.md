@@ -12,6 +12,7 @@ an 88x31 that you can click<br>
 
 ## running
 ```bash
-podman pull elituf/incremnet:latest
-podman run --name incremnet -dt -p 1337:1337 -v ./users.redb:/project/users.redb incremnet
+git clone https://codeberg.org/futile/incremnet
+podman build -t incremnet .
+podman run --name incremnet -dt -p 1337:1337 -v ./users.redb:/project/users.redb:z incremnet
 ```
