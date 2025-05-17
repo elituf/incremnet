@@ -2,7 +2,7 @@ function update() {
     const key = document.getElementById('key').value || 'changeme';
     const code = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe>`;
     document.getElementById('code').value = code;
-    document.querySelector('.incremnet-btn iframe').src = `https://increm.net/badge?key=${key}`;
+    document.querySelector('body div iframe[title="incremnet badge"]').src = `https://increm.net/badge?key=${key}`;
 }
 
 function copy() {
