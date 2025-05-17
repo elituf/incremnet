@@ -60,13 +60,13 @@ textarea {
 }
 
 .btn-copy {
-    bottom: 5px;
-    right: -7px;
+    bottom: 4px;
+    right: -8px;
 }
 
 @-moz-document url-prefix() {
     .btn-copy {
-        bottom: 2px;
+        bottom: 1px;
         right: -8px;
     }
 }
