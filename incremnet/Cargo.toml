@@ -4,12 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-axum = "0.8.1"
+axum = "0.8.4"
 base64 = "0.22.1"
-handlebars = "6.3.1"
-minify-html = "0.15.0"
+handlebars = "6.3.2"
+minify-html = "0.16.4"
 redb = { workspace = true }
 redb_wrapper = { workspace = true }
 serde = { version = "1.0.219", features = ["derive"] }
 serde_json = { workspace = true }
-tokio = { version = "1.44.0", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1.45.0", features = ["rt-multi-thread", "macros"] }

@@ -3,6 +3,6 @@ members = ["tools", "incremnet", "redb_wrapper"]
 resolver = "2"
 
 [workspace.dependencies]
-redb = "2.4.0"
+redb = "2.5.0"
 serde_json = "1.0.140"
 redb_wrapper = { path = "redb_wrapper" }
