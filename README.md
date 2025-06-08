@@ -16,3 +16,9 @@ git clone https://codeberg.org/futile/incremnet
 podman build -t incremnet .
 podman run --name incremnet -dt -p 1337:1337 -v ./users.redb:/project/users.redb:z incremnet
 ```
+
+## basic backup
+```bash
+scp futile@192.168.178.3:/opt/incremnet/users.redb backups/users.redb
+cargo run --bin tools dump backups/users.redb backups/users.json
+```
