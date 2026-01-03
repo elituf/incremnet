@@ -1,0 +1,53 @@
+defmodule Incremnet.Database do
+  require Logger
+  use GenServer
+
+  @db_path "./incremnet_db"
+  @interval :timer.seconds(10)
+
+  def start_link(_arg) do
+    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
+  end
+
+  @impl true
+  def init(_arg) do
+    schedule_save()
+    Logger.info("Started incremnet database")
+    {:ok, nil, {:continue, :load}}
+  end
+
+  @impl true
+  def handle_continue(:load, state) do
+    Logger.info("Loading local database to ETS table")
+
+    case File.read(@db_path) do
+      {:ok, contents} ->
+        :ets.insert(Incremnet.Server, :erlang.binary_to_term(contents))
+        Logger.info("Loaded local database to ETS table")
+
+      _ ->
+        Logger.info("Did not load local database to ETS table")
+    end
+
+    {:noreply, state}
+  end
+
+  @impl true
+  def handle_info(:save, state) do
+    Logger.info("Saving ETS table to local database")
+
+    binary =
+      :ets.tab2list(Incremnet.Server)
+      |> :erlang.term_to_binary()
+
+    File.write!(@db_path, binary)
+    Logger.info("Saved ETS table to local database")
+
+    schedule_save()
+    {:noreply, state}
+  end
+
+  defp schedule_save do
+    Process.send_after(self(), :save, @interval)
+  end
+end
