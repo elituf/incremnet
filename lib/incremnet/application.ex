@@ -8,10 +8,13 @@ defmodule Incremnet.Application do
 
   @impl true
   def start(_type, _args) do
+    Incremnet.Assets.load()
+
     children = [
       # Starts a worker by calling: Incremnet.Worker.start_link(arg)
       Incremnet.Server,
-      Incremnet.Database
+      Incremnet.Database,
+      Incremnet.Web
     ]
 
     Logger.info("Starting supervisor")

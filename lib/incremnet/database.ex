@@ -3,7 +3,6 @@ defmodule Incremnet.Database do
   use GenServer
 
   @db_path "./incremnet_db"
-  @interval :timer.seconds(10)
 
   def start_link(_arg) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
@@ -48,6 +47,6 @@ defmodule Incremnet.Database do
   end
 
   defp schedule_save do
-    Process.send_after(self(), :save, @interval)
+    Process.send_after(self(), :save, Application.fetch_env!(:incremnet, :database_save_interval))
   end
 end
