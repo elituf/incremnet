@@ -1,6 +1,7 @@
 /_build/
 /.elixir_ls/
 /deps/
+/incremnet_db/
 /doc/
 erl_crash.dump
-incremnet_db
+incremnet.json
