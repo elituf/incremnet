@@ -8,5 +8,5 @@ increm.net {
 	encode gzip zstd
 
 	@api path /badge
-	reverse_proxy @api incremnet:34567
+	reverse_proxy @api app:34567
 }
