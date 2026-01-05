@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>incremnet</title>
+</head>
+
+<body>
+    <h4 class="title">welcome to incremnet</h4>
+    <p>simply place the below iframe anywhere you would place a normal 88x31 image.</p>
+    <div class="inputbox-container">
+        <label>key:</label>
+        <input type="text" id="key" placeholder="something unique" oninput="update()">
+    </div>
+    <div class="container">
+        <textarea readonly
+            id="code"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe></textarea>
+        <button class="btn-common btn-copy" onclick="copy()">copy</button>
+    </div>
+    <div>
+        <iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31"
+            style="border: none; background: url('https://increm.net/bg.png');"></iframe>
+    </div>
+    <div class="footer">
+        <p>with love from <a href="https://futile.eu" target="_blank">futile</a></p>
+    </div>
+</body>
+
+<script>
+    function update() {
+        const key = document.getElementById('key').value || 'changeme';
+        const code = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe>`;
+        document.getElementById('code').value = code;
+        document.querySelector('body div iframe[title="incremnet badge"]').src = `https://increm.net/badge?key=${key}`;
+    }
+
+    function copy() {
+        document.querySelector('textarea').select();
+        document.execCommand('copy');
+        let btn = document.querySelector('.btn-copy');
+        btn.textContent = 'ok !';
+        setTimeout(function () {
+            btn.textContent = 'copy';
+        }, 1500)
+    }
+</script>
+
+<style>
+    @import url(https://fonts.bunny.net/css?family=ibm-plex-mono:400);
+
+    * {
+        font-family: 'IBM Plex Mono', monospace;
+    }
+
+    body {
+        color: white;
+        background-color: black;
+        width: 300px;
+    }
+
+    ::selection {
+        background-color: white;
+        color: black;
+    }
+
+    .title {
+        margin-top: 12px;
+        margin-bottom: 0;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    .inputbox-container {
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .inputbox-container input {
+        color: white;
+        border: 2px solid white;
+        background-color: black;
+    }
+
+    textarea {
+        resize: none;
+        width: 300px;
+        height: 120px;
+        font-size: 12px;
+        color: white;
+        border: 2px solid white;
+        background-color: black;
+    }
+
+    .btn-common {
+        position: absolute;
+        display: inline-block;
+        padding: 3px 6px;
+        color: white;
+        background-color: black;
+        border: 2px solid white;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .btn-copy {
+        bottom: 4px;
+        right: -8px;
+    }
+
+    @-moz-document url-prefix() {
+        .btn-copy {
+            bottom: 1px;
+            right: -8px;
+        }
+    }
+
+    .container {
+        position: relative;
+        margin-bottom: 16px;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        margin-left: 8px;
+    }
+
+    a {
+        color: white;
+        text-decoration: underline dotted;
+    }
+
+    a:hover {
+        text-decoration: underline solid;
+    }
+</style>
+
+</html>
