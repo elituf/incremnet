@@ -45,12 +45,12 @@
             try {
                 const request = await fetch('/badge?key=<%= key %>', { method: 'POST' });
                 if (request.ok) {
-                    const response = await request.json();
-                    const value = document.getElementById('value');
-                    value.textContent = response.value;
-                    value.style.color = 'grey';
+                    const value = await request.text();
+                    const value_elem = document.getElementById('value');
+                    value_elem.textContent = value;
+                    value_elem.style.color = 'grey';
                     setTimeout(() => {
-                        value.style.color = '';
+                        value_elem.style.color = '';
                     }, 100);
                 } else {
                     console.error('failed to incremnet badge');

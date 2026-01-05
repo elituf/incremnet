@@ -27,11 +27,11 @@ defmodule Incremnet.Web.Badge do
     case conn.params do
       %{"key" => key} ->
         body =
-          %{value: Incremnet.Server.increment(key)}
-          |> JSON.encode!()
+          Incremnet.Server.increment(key)
+          |> to_string()
 
         conn
-        |> put_resp_content_type("application/json")
+        |> put_resp_content_type("text/plain")
         |> send_resp(200, body)
 
       _ ->
