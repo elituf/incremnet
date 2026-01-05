@@ -1,11 +1,11 @@
-defmodule Incremnet.Web do
+defmodule Incremnet.Web.Badge do
   use Plug.Router
 
   plug(:match)
   plug(:fetch_query_params)
   plug(:dispatch)
 
-  get "/badge" do
+  get "/" do
     case conn.params do
       %{"key" => key} ->
         value = Incremnet.Server.get(key)
@@ -23,7 +23,7 @@ defmodule Incremnet.Web do
     end
   end
 
-  post "/badge" do
+  post "/" do
     case conn.params do
       %{"key" => key} ->
         body =
@@ -42,13 +42,5 @@ defmodule Incremnet.Web do
 
   match _ do
     send_resp(conn, 404, "no such route: #{conn.method} #{conn.request_path}")
-  end
-
-  def child_spec(_arg) do
-    Plug.Cowboy.child_spec(
-      scheme: :http,
-      plug: __MODULE__,
-      options: [port: Application.fetch_env!(:incremnet, :http_port)]
-    )
   end
 end

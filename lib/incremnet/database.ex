@@ -11,7 +11,7 @@ defmodule Incremnet.Database do
   @impl true
   def init(_arg) do
     schedule_save()
-    Logger.info("Started incremnet database")
+    Logger.info("Starting incremnet database")
     {:ok, nil, {:continue, :load}}
   end
 
@@ -20,6 +20,9 @@ defmodule Incremnet.Database do
     Logger.info("Loading local database to ETS table")
 
     case File.read(@db_path) do
+      {:ok, ""} ->
+        Logger.info("Did not load local database to ETS table")
+
       {:ok, contents} ->
         :ets.insert(Incremnet.Server, :erlang.binary_to_term(contents))
         Logger.info("Loaded local database to ETS table")
@@ -34,16 +37,18 @@ defmodule Incremnet.Database do
   @impl true
   def handle_info(:save, state) do
     Logger.info("Saving ETS table to local database")
+    save()
+    Logger.info("Saved ETS table to local database")
+    schedule_save()
+    {:noreply, state}
+  end
 
+  defp save do
     binary =
       :ets.tab2list(Incremnet.Server)
       |> :erlang.term_to_binary()
 
     File.write!(@db_path, binary)
-    Logger.info("Saved ETS table to local database")
-
-    schedule_save()
-    {:noreply, state}
   end
 
   defp schedule_save do

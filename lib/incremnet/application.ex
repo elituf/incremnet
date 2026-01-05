@@ -14,7 +14,7 @@ defmodule Incremnet.Application do
       # Starts a worker by calling: Incremnet.Worker.start_link(arg)
       Incremnet.Server,
       Incremnet.Database,
-      Incremnet.Web
+      Incremnet.Web.Router
     ]
 
     Logger.info("Starting supervisor")

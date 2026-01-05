@@ -24,7 +24,7 @@ defmodule Incremnet.Server do
   @impl true
   def init(_arg) do
     :ets.new(__MODULE__, [:named_table, :public, write_concurrency: true])
-    Logger.info("Started incremnet server")
+    Logger.info("Starting incremnet server")
     {:ok, nil}
   end
 end
