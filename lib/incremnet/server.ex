@@ -16,7 +16,6 @@ defmodule Incremnet.Server do
         value
 
       [] ->
-        :ets.insert(__MODULE__, {key, 0})
         0
     end
   end
