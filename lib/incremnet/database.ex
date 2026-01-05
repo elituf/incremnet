@@ -14,6 +14,7 @@ defmodule Incremnet.Database do
 
     schedule_save()
     Logger.info("Starting incremnet database")
+    Process.flag(:trap_exit, true)
     {:ok, nil, {:continue, :load}}
   end
 
@@ -44,6 +45,15 @@ defmodule Incremnet.Database do
     Logger.info("Saved ETS table to local database")
     schedule_save()
     {:noreply, state}
+  end
+
+  @impl true
+  def terminate(_reason, _state) do
+    Logger.info("Shutting down incremnet database")
+    Logger.info("Saving ETS table to local database")
+    save()
+    Logger.info("Saved ETS table to local database")
+    :normal
   end
 
   defp save do
