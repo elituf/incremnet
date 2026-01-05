@@ -2,14 +2,16 @@ defmodule Incremnet.Database do
   require Logger
   use GenServer
 
-  @db_path "./incremnet_db"
-
   def start_link(_arg) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
   @impl true
   def init(_arg) do
+    Application.fetch_env!(:incremnet, :database_path)
+    |> Path.dirname()
+    |> File.mkdir_p!()
+
     schedule_save()
     Logger.info("Starting incremnet database")
     {:ok, nil, {:continue, :load}}
@@ -19,7 +21,8 @@ defmodule Incremnet.Database do
   def handle_continue(:load, state) do
     Logger.info("Loading local database to ETS table")
 
-    case File.read(@db_path) do
+    case Application.fetch_env!(:incremnet, :database_path)
+         |> File.read() do
       {:ok, ""} ->
         Logger.info("Did not load local database to ETS table")
 
@@ -48,7 +51,8 @@ defmodule Incremnet.Database do
       :ets.tab2list(Incremnet.Server)
       |> :erlang.term_to_binary()
 
-    File.write!(@db_path, binary)
+    Application.fetch_env!(:incremnet, :database_path)
+    |> File.write!(binary)
   end
 
   defp schedule_save do
