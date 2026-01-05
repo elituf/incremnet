@@ -1,0 +1,12 @@
+www.increm.net {
+	redir https://increm.net{uri}
+}
+
+increm.net {
+	root * /data/home
+	file_server
+	encode gzip zstd
+
+	@api path /badge
+	reverse_proxy @api :34567
+}

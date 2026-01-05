@@ -1,0 +1,18 @@
+services:
+  incremnet:
+    build: .
+    expose:
+      - 34567
+    volumes:
+      - ./incremnet_db:/app/incremnet_db
+
+  server:
+    image: caddy:2.11-alpine
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./www/home:/data/home
+    restart: unless-stopped
