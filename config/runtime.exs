@@ -1,4 +1,10 @@
 import Config
+import Dotenvy
+
+source!([
+  Path.absname(".env"),
+  System.get_env()
+])
 
 database_path =
   case config_env() do
@@ -8,8 +14,7 @@ database_path =
   end
 
 config :incremnet,
-  http_port:
-    System.get_env("INCREMNET_HTTP_PORT", "34567")
-    |> String.to_integer(),
   database_save_interval: :timer.seconds(60),
-  database_path: database_path
+  database_path: database_path,
+  http_port: env!("HTTP_PORT") |> String.to_integer(),
+  admin_token: env!("ADMIN_TOKEN")

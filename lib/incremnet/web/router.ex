@@ -5,6 +5,7 @@ defmodule Incremnet.Web.Router do
   plug(:dispatch)
 
   forward("/badge", to: Incremnet.Web.Badge)
+  forward("/admin", to: Incremnet.Web.Admin)
 
   match _ do
     send_resp(conn, 404, "no such route: #{conn.method} #{conn.request_path}")

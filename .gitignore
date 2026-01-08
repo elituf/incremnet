@@ -3,5 +3,6 @@
 /deps/
 /incremnet_db/
 /doc/
+.env
 erl_crash.dump
 incremnet.json
