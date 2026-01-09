@@ -1,6 +1,7 @@
 defmodule Incremnet.Web.Router do
   use Plug.Router
 
+  plug(Incremnet.Plugs.Cors)
   plug(:match)
   plug(:dispatch)
 

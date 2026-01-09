@@ -2,7 +2,6 @@ defmodule Incremnet.Web.Admin do
   use Plug.Router
 
   plug(:match)
-  plug(Incremnet.Plugs.Cors)
   plug(Incremnet.Plugs.LogConn)
   plug(Incremnet.Plugs.RateLimit)
   plug(Incremnet.Plugs.RequireBearer)

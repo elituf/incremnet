@@ -5,8 +5,9 @@ services:
       - 34567
     volumes:
       - ./incremnet_db:/app/incremnet_db
+    env_file: .env
 
-  server:
+  caddy:
     image: caddy:2.11-alpine
     ports:
       - 80:80
@@ -14,5 +15,10 @@ services:
       - 443:443/udp
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy:/data/caddy
       - ./www/home:/data/home
+      - ./www/admin:/data/admin
     restart: unless-stopped
+
+volumes:
+  caddy:
