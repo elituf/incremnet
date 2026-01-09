@@ -16,9 +16,9 @@
         <input type="text" id="key" placeholder="something unique" oninput="update()">
     </div>
     <div class="container">
-        <textarea readonly
-            id="code"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe></textarea>
-        <button class="btn-common btn-copy" onclick="copy()">copy</button>
+        <textarea readonly id="code"><iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe>
+        </textarea>
+        <button class="copy-btn" onclick="copy()">copy</button>
     </div>
     <div>
         <iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31"
@@ -40,10 +40,10 @@
     function copy() {
         document.querySelector('textarea').select();
         document.execCommand('copy');
-        let btn = document.querySelector('.btn-copy');
-        btn.textContent = 'ok !';
+        let copy_btn = document.querySelector('.copy-btn');
+        copy_btn.textContent = 'ok !';
         setTimeout(function () {
-            btn.textContent = 'copy';
+            copy_btn.textContent = 'copy';
         }, 1500)
     }
 </script>
@@ -55,15 +55,22 @@
         font-family: 'IBM Plex Mono', monospace;
     }
 
-    body {
+    body, input {
         color: white;
         background-color: black;
-        width: 300px;
+    }
+
+    input {
+        border: 2px solid white;
+    }
+
+    p, label {
+        font-size: 14px;
     }
 
     ::selection {
-        background-color: white;
         color: black;
+        background-color: white;
     }
 
     .title {
@@ -71,23 +78,9 @@
         margin-bottom: 0;
     }
 
-    p {
-        font-size: 14px;
-    }
-
-    label {
-        font-size: 14px;
-    }
-
     .inputbox-container {
         align-items: center;
         margin-bottom: 16px;
-    }
-
-    .inputbox-container input {
-        color: white;
-        border: 2px solid white;
-        background-color: black;
     }
 
     textarea {
@@ -100,7 +93,7 @@
         background-color: black;
     }
 
-    .btn-common {
+    .copy-btn {
         position: absolute;
         display: inline-block;
         padding: 3px 6px;
@@ -109,23 +102,20 @@
         border: 2px solid white;
         cursor: pointer;
         user-select: none;
-    }
-
-    .btn-copy {
         bottom: 4px;
-        right: -8px;
+        right: 0;
     }
 
     @-moz-document url-prefix() {
-        .btn-copy {
+        .copy-btn {
             bottom: 1px;
-            right: -8px;
         }
     }
 
     .container {
         position: relative;
         margin-bottom: 16px;
+        display: inline-block;
     }
 
     .footer {
