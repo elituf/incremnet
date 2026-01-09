@@ -8,7 +8,7 @@ COPY templates ./templates
 COPY mix.exs .
 COPY mix.lock .
 RUN mix deps.get \
-&& mix release
+    && mix release
 
 # ---- app ----
 FROM alpine:3
