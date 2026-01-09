@@ -12,6 +12,7 @@ defmodule Incremnet.Application do
 
     children = [
       # Starts a worker by calling: Incremnet.Worker.start_link(arg)
+      Incremnet.Plugs.RateLimit,
       Incremnet.Server,
       Incremnet.Database,
       Incremnet.Web.Router

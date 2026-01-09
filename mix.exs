@@ -14,7 +14,7 @@ defmodule Incremnet.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:observer, :wx, :runtime_tools, :logger],
+      extra_applications: [:logger],
       mod: {Incremnet.Application, []}
     ]
   end
@@ -23,7 +23,8 @@ defmodule Incremnet.MixProject do
   defp deps do
     [
       plug_cowboy: "~> 2.0",
-      dotenvy: "~> 1.0"
+      dotenvy: "~> 1.0",
+      hammer: "~> 7.0"
     ]
   end
 end

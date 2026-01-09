@@ -20,6 +20,14 @@ defmodule Incremnet.Server do
     end
   end
 
+  def set(key, count) do
+    :ets.insert(__MODULE__, {key, count})
+  end
+
+  def delete(key) do
+    :ets.delete(__MODULE__, key)
+  end
+
   @impl true
   def init(_arg) do
     :ets.new(__MODULE__, [:named_table, :public, write_concurrency: true])
