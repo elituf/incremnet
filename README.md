@@ -1,9 +1,10 @@
 # incremnet
 
-an 88x31 that you can click  
+an 88x31 that you can click
+
 ![](https://i.vgy.me/w355Od.png)
 
-*visit [increm.net](https://increm.net) to get your own!* <sup>or just read below</sup>
+*visit [increm.net](https://increm.net) to get your own!*
 
 ## using
 
@@ -11,7 +12,7 @@ place this `iframe` somewhere you would normally put an 88x31. don't forget to c
 
 ```html
 <iframe
-  src="http://localhost:1337/badge?key=my_key"
+  src="https://increm.net/badge?key=changeme"
   title="incremnet badge"
   width="88"
   height="31"
