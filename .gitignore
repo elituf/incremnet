@@ -1,8 +1,1 @@
-/_build/
-/.elixir_ls/
-/deps/
-/incremnet_db/
-/doc/
-.env
-erl_crash.dump
-incremnet.json
+node_modules/

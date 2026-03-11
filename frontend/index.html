@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <link rel="stylesheet" href="index.css" />
+        <title>incremnet</title>
+    </head>
+
+    <body>
+        <h4 class="title">welcome to incremnet</h4>
+        <p>
+            simply place the below iframe anywhere you would place a normal
+            88x31 image.
+        </p>
+        <div class="inputbox-container">
+            <label>key:</label>
+            <input
+                type="text"
+                id="key"
+                placeholder="something unique"
+                oninput="update()"
+            />
+        </div>
+        <div class="container">
+            <textarea readonly id="code">
+<iframe src="https://increm.net/badge?key=changeme" title="incremnet badge" width="88" height="31" style="border: none; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfBAMAAACR5hfTAAAAD1BMVEXU0Mj///+AgIBAQEAAAABaUoVtAAAAk0lEQVQ4y83SYQqCUBDE8WnzAEkX2MYjdAE/7P3P1LweQRDaGBj+WdwH/hARsWN0uwlPd7NTw+OXLkLq7OG+Jg/3Rx8BzxvwUBtw1WzjoaoO8TV2wnzm4evbL5owa3i0w68FPjLe0sERkWBGBrUITTstYLGAJpEZslqaJazRAiksJs91rNH9jptcwWDqyhfWKfCPHpwtQV++roNeAAAAAElFTkSuQmCC');;"></iframe>
+        </textarea
+            >
+            <button class="copy-btn" onclick="copy()">copy</button>
+        </div>
+        <div>
+            <iframe
+                src="https://increm.net/badge?key=changeme"
+                title="incremnet badge"
+                width="88"
+                height="31"
+                style="
+                    border: none;
+                    background: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfBAMAAACR5hfTAAAAD1BMVEXU0Mj///+AgIBAQEAAAABaUoVtAAAAk0lEQVQ4y83SYQqCUBDE8WnzAEkX2MYjdAE/7P3P1LweQRDaGBj+WdwH/hARsWN0uwlPd7NTw+OXLkLq7OG+Jg/3Rx8BzxvwUBtw1WzjoaoO8TV2wnzm4evbL5owa3i0w68FPjLe0sERkWBGBrUITTstYLGAJpEZslqaJazRAiksJs91rNH9jptcwWDqyhfWKfCPHpwtQV++roNeAAAAAElFTkSuQmCC&quot;);
+                "
+            ></iframe>
+        </div>
+        <div class="footer">
+            <p>
+                with love from
+                <a href="https://futile.eu" target="_blank">futile</a>
+            </p>
+        </div>
+    </body>
+
+    <script>
+        function update() {
+            const key = document.getElementById("key").value || "changeme";
+            const code = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfBAMAAACR5hfTAAAAD1BMVEXU0Mj///+AgIBAQEAAAABaUoVtAAAAk0lEQVQ4y83SYQqCUBDE8WnzAEkX2MYjdAE/7P3P1LweQRDaGBj+WdwH/hARsWN0uwlPd7NTw+OXLkLq7OG+Jg/3Rx8BzxvwUBtw1WzjoaoO8TV2wnzm4evbL5owa3i0w68FPjLe0sERkWBGBrUITTstYLGAJpEZslqaJazRAiksJs91rNH9jptcwWDqyhfWKfCPHpwtQV++roNeAAAAAElFTkSuQmCC');;"></iframe>`;
+            document.getElementById("code").value = code;
+            document.querySelector(
+                'body div iframe[title="incremnet badge"]',
+            ).src = `https://increm.net/badge?key=${key}`;
+        }
+
+        function copy() {
+            document.querySelector("textarea").select();
+            document.execCommand("copy");
+            let copy_btn = document.querySelector(".copy-btn");
+            copy_btn.textContent = "ok !";
+            setTimeout(function () {
+                copy_btn.textContent = "copy";
+            }, 1500);
+        }
+    </script>
+
+    <style>
+        @import url(https://fonts.bunny.net/css?family=ibm-plex-mono:400);
+
+        * {
+            font-family: "IBM Plex Mono", monospace;
+        }
+
+        body,
+        input {
+            color: white;
+            background-color: black;
+        }
+
+        input {
+            border: 2px solid white;
+        }
+
+        p,
+        label {
+            font-size: 14px;
+        }
+
+        ::selection {
+            color: black;
+            background-color: white;
+        }
+
+        .title {
+            margin-top: 12px;
+            margin-bottom: 0;
+        }
+
+        .inputbox-container {
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        textarea {
+            resize: none;
+            width: 300px;
+            height: 120px;
+            font-size: 12px;
+            color: white;
+            border: 2px solid white;
+            background-color: black;
+        }
+
+        .copy-btn {
+            position: absolute;
+            display: inline-block;
+            padding: 3px 6px;
+            color: white;
+            background-color: black;
+            border: 2px solid white;
+            cursor: pointer;
+            user-select: none;
+            bottom: 4px;
+            right: 0;
+        }
+
+        @-moz-document url-prefix() {
+            .copy-btn {
+                bottom: 1px;
+            }
+        }
+
+        .container {
+            position: relative;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            margin-left: 8px;
+        }
+
+        a {
+            color: white;
+            text-decoration: underline dotted;
+        }
+
+        a:hover {
+            text-decoration: underline solid;
+        }
+    </style>
+</html>
