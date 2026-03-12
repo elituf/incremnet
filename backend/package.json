@@ -3,7 +3,8 @@
   "version": "0.6.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/main.ts"
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
