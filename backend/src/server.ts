@@ -55,7 +55,7 @@ fastify.delete<{
 });
 
 fastify.get(
-  "/admin/export",
+  "/admin/all",
   { preHandler: [requireBearer] },
   async (req, reply) => {
     const entries = await bulkGet();
@@ -65,7 +65,7 @@ fastify.get(
 
 fastify.post<{
   Body: Record<string, number>;
-}>("/admin/import", { preHandler: [requireBearer] }, async (req, reply) => {
+}>("/admin/all", { preHandler: [requireBearer] }, async (req, reply) => {
   const entries = req.body;
   if (!entries) {
     return reply.code(400).send({ error: "missing json body" });
