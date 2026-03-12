@@ -76,7 +76,10 @@ fastify.post<{
 
 export default async function run() {
   try {
-    await fastify.listen({ port: parseInt(process.env.SERVER_PORT!) });
+    await fastify.listen({
+      port: parseInt(process.env.PORT || process.env.SERVER_PORT!),
+      host: "0.0.0.0",
+    });
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
