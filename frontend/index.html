@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <link rel="stylesheet" href="index.css" />
+        <title>incremnet</title>
+    </head>
+
+    <body>
+        <div class="flex flex-col gap-2 max-w-100">
+            <h1>welcome to incremnet</h1>
+            <p class="text-xs text-neutral-400">
+                // like 88x31s? like clicking things? boy, do I have a surprise
+                for you!
+            </p>
+            <p>
+                simply place the below
+                <span class="text-xs text-neutral-200">&lt;iframe&gt;</span>
+                anywhere you would place a normal 88x31 image.
+            </p>
+            <div class="flex flex-col border-2 divide-y-2">
+                <div class="flex divide-x-2">
+                    <label class="py-1 px-2">key:</label>
+                    <input
+                        type="text"
+                        id="key"
+                        placeholder="something unique"
+                        oninput="update()"
+                        class="indent-1 outline-none flex-1 p-1"
+                    />
+                </div>
+                <pre
+                    id="snippet"
+                    class="p-1 whitespace-pre-wrap wrap-break-word text-neutral-200"
+                ></pre>
+                <div class="flex gap-1 pl-1 p-1">
+                    <button
+                        id="hardcode"
+                        type="checkbox"
+                        title="this will include the fallback/background image as base64 instead of pointing to a link on this website"
+                        onclick="toggleHardcode()"
+                        class="cursor-pointer"
+                    >
+                        [ ]
+                        <span class="underline decoration-dotted"
+                            >hardcode fallback image?</span
+                        >
+                    </button>
+                </div>
+                <div class="flex justify-between items-center p-1">
+                    <div class="flex gap-2 items-center">
+                        <div id="preview"></div>
+                        <span>&lt;-- preview</span>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <span>copy --&gt;</span>
+                        <button
+                            id="copy-btn"
+                            onclick="copy()"
+                            class="px-2 cursor-pointer border-2 bg-black"
+                        >
+                            copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p
+            class="absolute bottom-0 left-0 p-2 leading-none flex items-center gap-2"
+        >
+            with ♥ from
+            <a
+                href="https://futile.eu"
+                target="_blank"
+                class="font-[Pirata_One] leading-none text-lg"
+                >futile</a
+            >
+            ----
+            <a
+                href="https://github.com/elituf/incremnet"
+                target="_blank"
+                class="underline decoration-dotted hover:decoration-solid"
+                >source</a
+            >
+        </p>
+        <a
+            href="admin.html"
+            class="absolute top-0 right-0 px-2 py-1 underline decoration-solid select-none text-black hover:text-white"
+            >admin</a
+        >
+    </body>
+
+    <script>
+        let hardcodeEnabled = false;
+
+        function update() {
+            const key = document.getElementById("key").value || "changeme";
+            let snippet;
+            if (hardcodeEnabled) {
+                snippet = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfBAMAAACR5hfTAAAAD1BMVEXU0Mj///+AgIBAQEAAAABaUoVtAAAAk0lEQVQ4y83SYQqCUBDE8WnzAEkX2MYjdAE/7P3P1LweQRDaGBj+WdwH/hARsWN0uwlPd7NTw+OXLkLq7OG+Jg/3Rx8BzxvwUBtw1WzjoaoO8TV2wnzm4evbL5owa3i0w68FPjLe0sERkWBGBrUITTstYLGAJpEZslqaJazRAiksJs91rNH9jptcwWDqyhfWKfCPHpwtQV++roNeAAAAAElFTkSuQmCC");"></iframe>`;
+            } else {
+                snippet = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url("https://increm.net/bg.png");"></iframe>`;
+            }
+            document.getElementById("snippet").textContent = snippet;
+            document.getElementById("preview").innerHTML = snippet;
+        }
+
+        // call that bitch once to fill the snippet and preview
+        update();
+
+        function toggleHardcode() {
+            hardcodeEnabled = !hardcodeEnabled;
+            const btn = document.getElementById("hardcode");
+            btn.innerHTML = hardcodeEnabled
+                ? `[x] <span class="underline decoration-dotted"
+                    >hardcode fallback image?</span
+                >`
+                : `[ ] <span class="underline decoration-dotted"
+                    >hardcode fallback image?</span
+                >`;
+            update();
+        }
+
+        function copy() {
+            const snippet = document.getElementById("snippet").textContent;
+            navigator.clipboard.writeText(snippet);
+            const btn = document.getElementById("copy-btn");
+            btn.textContent = "ok !";
+            setTimeout(() => {
+                btn.textContent = "copy";
+            }, 1500);
+        }
+    </script>
+</html>

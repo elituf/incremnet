@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <link rel="stylesheet" href="index.css" />
+        <title>incremnet admin</title>
+    </head>
+
+    <body>
+        <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-center">
+                <label>admin token</label>
+                <div>
+                    <input
+                        id="token"
+                        type="password"
+                        placeholder="token"
+                        class="border-2 outline-none"
+                    />
+                </div>
+            </div>
+            <div class="flex gap-2 items-center">
+                <label>set user</label>
+                <div>
+                    <input
+                        id="count-user"
+                        placeholder="key"
+                        class="border-2 outline-none"
+                    />
+                    <input
+                        id="count"
+                        placeholder="count"
+                        class="border-2 outline-none"
+                    />
+                    <button
+                        onclick="set_user()"
+                        class="px-2 border-2 outline-none cursor-pointer"
+                    >
+                        set
+                    </button>
+                </div>
+            </div>
+            <div class="flex gap-2 items-center">
+                <label>delete user</label>
+                <div>
+                    <input
+                        id="delete-user"
+                        placeholder="key"
+                        class="border-2 outline-none"
+                    />
+                    <button
+                        onclick="delete_user()"
+                        class="px-2 border-2 outline-none cursor-pointer"
+                    >
+                        delete
+                    </button>
+                </div>
+            </div>
+        </div>
+        <a
+            href="index.html"
+            class="absolute top-0 right-0 px-2 py-1 underline decoration-solid select-none text-black hover:text-white"
+            >back</a
+        >
+    </body>
+
+    <script>
+        async function set_user() {
+            token = document.getElementById("token").value;
+            user = document.getElementById("count-user").value;
+            count = document.getElementById("count").value;
+
+            const url = `https://increm.net/admin/${user}/${count}`;
+            try {
+                const response = await fetch(url, {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                const result = await response.text();
+                console.log(result);
+                alert(result);
+            } catch (error) {
+                console.error(error);
+                alert(error);
+            }
+        }
+
+        async function delete_user() {
+            token = document.getElementById("token").value;
+            user = document.getElementById("delete-user").value;
+
+            const url = `https://increm.net/admin/${user}`;
+            try {
+                const response = await fetch(url, {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                const result = await response.text();
+                console.log(result);
+                alert(result);
+            } catch (error) {
+                console.error(error);
+                alert(error);
+            }
+        }
+    </script>
+</html>
