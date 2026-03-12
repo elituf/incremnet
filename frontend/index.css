@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pirata+One&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Fira Code", monospace;
+    --font-sans--font-feature-settings: "liga" 1, "calt" 1;
+}
+
+@layer base {
+    body {
+        @apply p-2 text-white bg-black;
+    }
+
+    ::selection {
+        @apply text-black bg-white;
+    }
+
+    h1 {
+        @apply text-xl font-bold leading-none;
+    }
+
+    p,
+    span,
+    label,
+    input,
+    button {
+        @apply text-sm;
+    }
+
+    pre {
+        @apply text-xs;
+    }
+}

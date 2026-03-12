@@ -3,43 +3,74 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <link rel="stylesheet" href="index.css" />
         <title>incremnet admin</title>
     </head>
 
     <body>
-        <div class="inputbox-container" style="margin-top: 16px">
-            <label>admin token</label>
-            <div class="controls">
-                <input id="token" type="password" />
+        <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-center">
+                <label>admin token</label>
+                <div>
+                    <input
+                        id="token"
+                        type="password"
+                        placeholder="token"
+                        class="border-2 outline-none"
+                    />
+                </div>
+            </div>
+            <div class="flex gap-2 items-center">
+                <label>set user</label>
+                <div>
+                    <input
+                        id="count-user"
+                        placeholder="key"
+                        class="border-2 outline-none"
+                    />
+                    <input
+                        id="count"
+                        placeholder="count"
+                        class="border-2 outline-none"
+                    />
+                    <button
+                        onclick="set_user()"
+                        class="px-2 border-2 outline-none cursor-pointer"
+                    >
+                        set
+                    </button>
+                </div>
+            </div>
+            <div class="flex gap-2 items-center">
+                <label>delete user</label>
+                <div>
+                    <input
+                        id="delete-user"
+                        placeholder="key"
+                        class="border-2 outline-none"
+                    />
+                    <button
+                        onclick="delete_user()"
+                        class="px-2 border-2 outline-none cursor-pointer"
+                    >
+                        delete
+                    </button>
+                </div>
             </div>
         </div>
-        <br />
-        <div class="inputbox-container">
-            <label>set user</label>
-            <div class="controls">
-                <input id="count-user" style="width: 108px" />
-                <input id="count" style="width: 64px" />
-                <button class="btn" onclick="set_user()">set</button>
-            </div>
-        </div>
-        <div class="inputbox-container">
-            <label>delete user</label>
-            <div class="controls">
-                <input id="delete-user" style="width: 108px" />
-                <button class="btn" onclick="delete_user()">delete</button>
-            </div>
-        </div>
+        <a
+            href="index.html"
+            class="absolute top-0 right-0 px-2 py-1 underline decoration-solid select-none text-black hover:text-white"
+            >back</a
+        >
     </body>
 
     <script>
-        function extract_input(id) {
-            return document.getElementById(id).value;
-        }
-
         async function set_user() {
-            token = extract_input("token");
-            user = extract_input("count-user");
-            count = extract_input("count");
+            token = document.getElementById("token").value;
+            user = document.getElementById("count-user").value;
+            count = document.getElementById("count").value;
 
             const url = `https://increm.net/admin/${user}/${count}`;
             try {
@@ -54,12 +85,13 @@
                 alert(result);
             } catch (error) {
                 console.error(error);
+                alert(error);
             }
         }
 
         async function delete_user() {
-            token = extract_input("token");
-            user = extract_input("delete-user");
+            token = document.getElementById("token").value;
+            user = document.getElementById("delete-user").value;
 
             const url = `https://increm.net/admin/${user}`;
             try {
@@ -74,62 +106,8 @@
                 alert(result);
             } catch (error) {
                 console.error(error);
+                alert(error);
             }
         }
     </script>
-
-    <style>
-        @import url(https://fonts.bunny.net/css?family=ibm-plex-mono:400);
-
-        * {
-            font-family: "IBM Plex Mono", monospace;
-        }
-
-        body,
-        input {
-            color: white;
-            background-color: black;
-        }
-
-        input {
-            border: 2px solid white;
-        }
-
-        p,
-        label {
-            font-size: 14px;
-        }
-
-        ::selection {
-            color: black;
-            background-color: white;
-        }
-
-        .inputbox-container {
-            display: grid;
-            grid-template-columns: 128px 1fr;
-            column-gap: 12px;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .inputbox-container > label {
-            text-align: right;
-            justify-self: end;
-        }
-
-        .controls {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .btn {
-            color: white;
-            background-color: black;
-            border: 2px solid white;
-            cursor: pointer;
-        }
-    </style>
 </html>
