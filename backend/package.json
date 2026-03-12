@@ -6,6 +6,9 @@
     "dev": "tsx watch src/main.ts"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.0",
+    "dotenv": "^17.3.1",
+    "eta": "^4.5.1",
     "fastify": "^5.7.4",
     "pino": "^10.3.1",
     "pino-pretty": "^13.1.3"
