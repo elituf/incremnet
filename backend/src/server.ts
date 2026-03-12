@@ -25,7 +25,7 @@ fastify.post<{ Querystring: { key: string } }>("/badge", async (req, reply) => {
     return reply.code(400).send({ error: "missing `key` parameter" });
   }
   const value = await incremnet(key);
-  return reply.code(200).type("text/plain").send(value);
+  return reply.code(200).type("text/plain").send(String(value));
 });
 
 fastify.put<{
