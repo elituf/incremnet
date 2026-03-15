@@ -99,9 +99,9 @@
             const key = document.getElementById("key").value || "changeme";
             let snippet;
             if (hardcodeEnabled) {
-                snippet = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfBAMAAACR5hfTAAAAD1BMVEXU0Mj///+AgIBAQEAAAABaUoVtAAAAk0lEQVQ4y83SYQqCUBDE8WnzAEkX2MYjdAE/7P3P1LweQRDaGBj+WdwH/hARsWN0uwlPd7NTw+OXLkLq7OG+Jg/3Rx8BzxvwUBtw1WzjoaoO8TV2wnzm4evbL5owa3i0w68FPjLe0sERkWBGBrUITTstYLGAJpEZslqaJazRAiksJs91rNH9jptcwWDqyhfWKfCPHpwtQV++roNeAAAAAElFTkSuQmCC");"></iframe>`;
+                snippet = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfBAMAAACR5hfTAAAAD1BMVEXU0Mj///+AgIBAQEAAAABaUoVtAAAAk0lEQVQ4y83SYQqCUBDE8WnzAEkX2MYjdAE/7P3P1LweQRDaGBj+WdwH/hARsWN0uwlPd7NTw+OXLkLq7OG+Jg/3Rx8BzxvwUBtw1WzjoaoO8TV2wnzm4evbL5owa3i0w68FPjLe0sERkWBGBrUITTstYLGAJpEZslqaJazRAiksJs91rNH9jptcwWDqyhfWKfCPHpwtQV++roNeAAAAAElFTkSuQmCC');"></iframe>`;
             } else {
-                snippet = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url("https://increm.net/bg.png");"></iframe>`;
+                snippet = `<iframe src="https://increm.net/badge?key=${key}" title="incremnet badge" width="88" height="31" style="border: none; background: url('https://increm.net/bg.png');"></iframe>`;
             }
             document.getElementById("snippet").textContent = snippet;
             document.getElementById("preview").innerHTML = snippet;
